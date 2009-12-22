@@ -2,11 +2,10 @@ h1. Readme
 
 h2. Options
 
-
 * *Set base url*
-@jQuery.use.base = 'http://example.com';@
+<pre>jQuery.use.base = 'http://example.com';</pre>
 * *Use a combine file as get args*
-@jQuery.use.combine = true;@
+<pre>jQuery.use.combine = true;</pre>
 * *Setup the modules*
 <pre>jQuery.use.modules = {
 	'test1'	: { 'path': 'assets/scripts/test1.js' },
@@ -18,44 +17,51 @@ h2. Options
 
 h2. Examples
 
+h3. Get the required files on the page
 
 <pre>
-<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="http://github.com/m64253/jQuery-use/raw/master/jquery.use.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://github.com/m64253/jQuery-use/raw/master/jquery.use.js"></script>
 </pre>
 
-h3. This should only load the *test1*
+h3. This should only load the "test1"
 
-@jQuery.use('test1', function($){
+<pre>jQuery.use('test1', function($){
 	console.log('LOADED: "test1"');
-});@
+});</pre>
 
-* This should only load the *test2* module, as the *test1* module should already be loaded
-@jQuery.use('test2', function($){
+h3. This should only load the *test2* module, as the *test1* module should already be loaded
+
+<pre>jQuery.use('test2', function($){
 	console.log('LOADED: "test2"');
-});@
+});</pre>
 
-* This should fire off as soon the earlier *test2* use is loaded
-@jQuery.use('test2', function($){
+h3. This should fire off as soon the earlier *test2* use is loaded
+
+<pre>jQuery.use('test2', function($){
 	console.log('LOADED: "test2"');
-});@
+});</pre>
 
-* This should only load the *test3* module, as *test1*, *test2* modules should already be loaded
-@jQuery.use('test3', function($){
+h3. This should only load the *test3* module, as *test1*, *test2* modules should already be loaded
+
+<pre>jQuery.use('test3', function($){
 	console.log('LOADED: "test3"');
-});@
+});</pre>
 
-* This should only load both the the *test4* and *test5* module, *test5* requires *test4*
-@jQuery.use('test5', function($){
+h3. This should only load both the the *test4* and *test5* module, *test5* requires *test4*
+
+<pre>jQuery.use('test5', function($){
 	console.log('LOADED: "test5"');
-});@
+});</pre>
 
-* This should fire off as soon as the earlier *test3* and *test5* are done
-@jQuery.use(['test3', 'test5'], function($){
+h3. This should fire off as soon as the earlier *test3* and *test5* are done
+
+<pre>jQuery.use(['test3', 'test5'], function($){
 	console.log('LOADED: "test3, test5"');
-});@
+});</pre>
 
-* This should fire off *directly*, uses no modules
-@jQuery.use(function($){
+h3. This should fire off *directly*, uses no modules
+
+<pre>jQuery.use(function($){
 	console.log('LOADED: "none"');
-});@
+});</pre>

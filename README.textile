@@ -17,10 +17,10 @@ h3. Options
 h3. Examples
 
 
-@
+<pre>
 <script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="http://github.com/m64253/jQuery-use/raw/master/jquery.use.js"></script>
-@
+</pre>
 
 * This should only load the *test1*
 @jQuery.use('test1', function($){

@@ -45,7 +45,7 @@ h3. Examples
 * This should only load both the the *test4* and *test5* module, *test5* requires *test4*
 @jQuery.use('test5', function($){
 	console.log('LOADED: "test5"');
-});
+});@
 
 * This should fire off as soon as the earlier *test3* and *test5* are done
 @jQuery.use(['test3', 'test5'], function($){

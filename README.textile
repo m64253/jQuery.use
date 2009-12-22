@@ -1,4 +1,6 @@
-h3. Options
+h1. Readme
+
+h2. Options
 
 
 * *Set base url*
@@ -14,7 +16,7 @@ h3. Options
 	'test5'	: { 'path': 'assets/scripts/test5.js', 'require': ['test4'] }
 };</pre>
 
-h3. Examples
+h2. Examples
 
 
 <pre>
@@ -22,7 +24,8 @@ h3. Examples
 <script type="text/javascript" charset="utf-8" src="http://github.com/m64253/jQuery-use/raw/master/jquery.use.js"></script>
 </pre>
 
-* This should only load the *test1*
+h3. This should only load the *test1*
+
 @jQuery.use('test1', function($){
 	console.log('LOADED: "test1"');
 });@

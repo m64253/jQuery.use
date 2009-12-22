@@ -6,13 +6,13 @@ h3. Options
 * *Use a combine file as get args*
 @jQuery.use.combine = true;@
 * *Setup the modules*
-@jQuery.use.modules = {
+<pre>jQuery.use.modules = {
 	'test1'	: { 'path': 'assets/scripts/test1.js' },
 	'test2'	: { 'path': 'assets/scripts/test2.js', 'require': 'test1' },
 	'test3'	: { 'path': 'assets/scripts/test3.js', 'require': ['test1', 'test2'] },
 	'test4'	: { 'path': 'assets/scripts/test4.js' },
 	'test5'	: { 'path': 'assets/scripts/test5.js', 'require': ['test4'] }
-};@
+};</pre>
 
 h3. Examples
 

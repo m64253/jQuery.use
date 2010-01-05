@@ -2,12 +2,12 @@
 	
 	var elHead = document.getElementsByTagName('head')[0];
 		
-	function defer(aGetStr, fCallback, sType) {
+	function defer(sGetStr, fCallback, sType) {
 		
 		var elTag, fCb
 		
 		if (!sType) {
-			sType = aGetStr.match(/\.(js|css)(\&|$)/)[1];
+			sType = sGetStr.match(/\.(js|css)(\&|$)/)[1];
 		}
 				
 		switch(sType.toLowerCase()) {
@@ -15,7 +15,7 @@
 				elTag = document.createElement('link');
 				elTag.rel = 'stylesheet';
 				elTag.type = 'text/css';
-				elTag.href = aGetStr;
+				elTag.href = sGetStr;
 				fCb = function(){
 					fCallback();
 				}
@@ -24,7 +24,7 @@
 			case 'js':
 				elTag = document.createElement('script');
 				elTag.type = 'text/javascript';
-				elTag.src = aGetStr;
+				elTag.src = sGetStr;
 				fCb = function(){
 					elTag.parentNode.removeChild(elTag);
 					fCallback();

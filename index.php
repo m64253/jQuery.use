@@ -23,7 +23,7 @@ if (!empty($_GET)) {
 	/**
 	 * Set base url
 	 */
-	// jQuery.use.base = 'http://10.0.1.201/~mikaelabrahamsson/jquery/use';
+	// jQuery.use.base = 'http://example.com/jquery/use';
 	
 	/**
 	 * Use a combine file as get args

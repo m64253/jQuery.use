@@ -11,11 +11,11 @@
 		}
 		return $.use.base;
 	}
-
+	
 	function getModules() {
 		return $.use.modules || [];
 	}
-
+	
 	function getCombine() {
 		return $.use.combine || false;
 	}
@@ -60,7 +60,7 @@
 
 		if (aModules.length === 0) {
 			$(fCallback);
-			next();
+			loadNext();
 			return;
 		}
 
@@ -74,10 +74,10 @@
 			if (iFiles === 1) {
 				sModule = aModules;
 				aGetStr = base + '?' + aModules.join('&');
-
+								
 				fCb = function(){
 					$(fCallback);
-					next();
+					loadNext();
 				};
 			} else {
 
@@ -91,32 +91,23 @@
 					} else {
 						var sModule = [aModules.shift()],
 							aGetStr = base + '?' + sModule[0];
-
-						defer(aGetStr, fCb, sModule);
+						
+						$.defer(aGetStr, function(){
+							aLoaded = aLoaded.concat(sModule);
+							fCb();
+						});
 					}
 				};
 			}
 
-			defer(aGetStr, fCb, sModule);
+			$.defer(aGetStr, function(){
+				aLoaded = aLoaded.concat(sModule);
+				fCb();
+			});
 		}, 0);
 	}
 
-	function defer(aGetStr, callback, aAddToLoaded) {
-		var elScript = document.createElement('script');
-
-		elScript.type = 'text/javascript';
-		elScript.src = aGetStr;
-
-		$(elScript).one('load', function(){
-			aLoaded = aLoaded.concat(aAddToLoaded);
-			elScript.parentNode.removeChild(elScript);
-			callback();
-		});
-
-		document.body.appendChild(elScript);
-	}
-
-	function next() {
+	function loadNext() {
 		bWorking = false;
 		var oNext = aLoad.shift();
 		if (oNext) {

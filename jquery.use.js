@@ -1,27 +1,65 @@
 (function($) {
 	
-	var bDOMReady = false,
+	var elHead,
+		bDOMReady = false,
 		bWorking = false,
 		aLoad = [],
 		aLoaded = [];
-	
-	function getBaseUrl() {
-		if (!$.use.base) {
-			$.use.base = window.location.protocol + '//' + window.location.hostname + window.location.pathname;
+		
+	function defer(sGetStr, fCallback, sType) {
+		
+		var elTag, 
+			fCb;
+		
+		sType = sType || sGetStr.match(/\.(js|css)(\&|$)/)[1];
+						
+		switch(sType.toLowerCase()) {
+			case 'css':
+				elTag = document.createElement('link');
+				elTag.rel = 'stylesheet';
+				elTag.type = 'text/css';
+				elTag.href = sGetStr;
+				fCb = function(){
+					fCallback();
+				}
+				break;
+			
+			case 'js':
+				elTag = document.createElement('script');
+				elTag.type = 'text/javascript';
+				elTag.src = sGetStr;
+				fCb = function(){
+					elTag.parentNode.removeChild(elTag);
+					fCallback();
+				}
+				break;
+		
+			default:
+				throw new Error('Invalid type "' + sType + '"');
 		}
-		return $.use.base;
-	}
-	
-	function getModules() {
-		return $.use.modules || [];
-	}
-	
-	function getCombine() {
-		return $.use.combine || false;
+		
+		if (elTag.onreadystatechange) {
+			elTag.onreadystatechange = function() {
+				var sReadyState = this.readyState;
+				if (sReadyState === 'complete' || sReadyState === 'loaded') {
+					elTag.onreadystatechange = null;
+					fCb();
+				}
+			}
+		} else {
+			elTag.onload = function() {
+				elTag.onload = null;
+				fCb();
+			}
+		}
+		
+		elHead = elHead || document.getElementsByTagName('head')[0]
+		
+		elHead.appendChild(elTag);
 	}
 	
 	function build(aParams, aOld) {
-		var oModules = getModules(),
+		var oModules = $.use.modules || [],
 			oModule,
 			aModules = aOld || [],
 			sParam,
@@ -50,7 +88,7 @@
 				}
 			}
 		}
-
+				
 		return aModules;
 	}
 	
@@ -65,12 +103,12 @@
 		}
 
 		setTimeout(function(){
-			var base = getBaseUrl(),
+			var base = $.use.base || window.location.protocol + '//' + window.location.hostname + window.location.pathname,
 				sModule,
-				iFiles = ((getCombine()) ? 1 : aModules.length),
+				iFiles = (($.use.combine) ? 1 : aModules.length),
 				aGetStr,
 				fCb;
-
+			
 			if (iFiles === 1) {
 				sModule = aModules;
 				aGetStr = base + '?' + aModules.join('&');
@@ -87,12 +125,12 @@
 				fCb = function(){
 					if (aModules.length === 0) {
 						$(fCallback);
-						next();
+						loadNext();
 					} else {
 						var sModule = [aModules.shift()],
 							aGetStr = base + '?' + sModule[0];
 						
-						$.defer(aGetStr, function(){
+						defer(aGetStr, function(){
 							aLoaded = aLoaded.concat(sModule);
 							fCb();
 						});
@@ -100,7 +138,7 @@
 				};
 			}
 
-			$.defer(aGetStr, function(){
+			defer(aGetStr, function(){
 				aLoaded = aLoaded.concat(sModule);
 				fCb();
 			});

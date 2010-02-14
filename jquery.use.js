@@ -11,9 +11,9 @@
 		var elTag, 
 			fCb;
 		
-		sType = sType || sGetStr.match(/\.(js|css)(\&|$)/)[1];
-						
-		switch(sType.toLowerCase()) {
+		sType = (sType || sGetStr.match(/\.(js|css)(\&|$)/)[1]).toLowerCase();
+		
+		switch(sType) {
 			case 'css':
 				elTag = document.createElement('link');
 				elTag.rel = 'stylesheet';
@@ -35,7 +35,7 @@
 				break;
 		
 			default:
-				throw new Error('Invalid type "' + sType + '"');
+				throw 'Invalid type: "' + sType + '"';
 		}
 		
 		if (elTag.onreadystatechange) {
